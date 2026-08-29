@@ -7,7 +7,6 @@ type TokenRequest = {
   room_name?: string;
   participant_identity?: string;
   participant_metadata?: string;
-  participant_attributes?: Record<string, string>;
 };
 
 async function createToken(request: TokenRequest) {
@@ -27,7 +26,7 @@ async function createToken(request: TokenRequest) {
     metadata: request.participant_metadata,
   });
 
-  // ✅ РАСШИРЕННЫЕ ПРАВА ДОСТУПА
+  // ✅ БАЗОВЫЕ ПРАВА ДОСТУПА (работают во всех версиях)
   at.addGrant({
     roomJoin: true,
     room: roomName,
@@ -35,13 +34,7 @@ async function createToken(request: TokenRequest) {
     canSubscribe: true,
     canPublishData: true,
     canUpdateOwnMetadata: true,
-    canPublishAudio: true,
-    canSubscribeAudio: true,
   });
-
-  at.attributes = {
-    nickname: request.participant_name,
-  };
 
   return at.toJwt();
 }
