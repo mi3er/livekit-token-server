@@ -36,10 +36,6 @@ async function createToken(request: TokenRequest) {
     canUpdateOwnMetadata: true,
   });
 
-  if (request.participant_attributes) {
-    at.attributes = request.participant_attributes;
-  }
-
   return at.toJwt();
 }
 
