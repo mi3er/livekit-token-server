@@ -27,6 +27,7 @@ async function createToken(request: TokenRequest) {
     metadata: request.participant_metadata,
   });
 
+  // ✅ РАСШИРЕННЫЕ ПРАВА ДОСТУПА
   at.addGrant({
     roomJoin: true,
     room: roomName,
@@ -34,7 +35,13 @@ async function createToken(request: TokenRequest) {
     canSubscribe: true,
     canPublishData: true,
     canUpdateOwnMetadata: true,
+    canPublishAudio: true,
+    canSubscribeAudio: true,
   });
+
+  at.attributes = {
+    nickname: request.participant_name,
+  };
 
   return at.toJwt();
 }
